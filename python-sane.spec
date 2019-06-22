@@ -11,9 +11,10 @@
 %if %{ahead} > 0
 %global snap .git%{shortcommit}
 %endif
+%bcond_with python2
 
 Name:           python-sane
-Version:        2.8.1
+Version:	2.8.3
 Release:        3
 Summary:        Python SANE interface
 
@@ -26,9 +27,11 @@ Source0:        https://github.com/python-pillow/Sane/tarball/%{commit}/python-p
 
 BuildRequires:  sane-devel
 
+%if %{with python2}
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-sphinx
+%endif
 
 BuildRequires:  python3-devel
 BuildRequires:  python-setuptools
@@ -44,6 +47,7 @@ This package contains the sane module for Python which provides access to
 various raster scanning devices such as flatbed scanners and digital cameras.
 
 
+%if %{with python2}
 %package -n %{name2}
 Summary:        Python module for using scanners
 Provides:       python2-pillow-sane = %{version}-%{release}
@@ -52,6 +56,7 @@ Requires:       python2-numpy
 %description -n %{name2}
 This package contains the sane module for Python which provides access to
 various raster scanning devices such as flatbed scanners and digital cameras.
+%endif
 
 
 %prep
@@ -73,6 +78,7 @@ make html
 rm -f _build/html/.buildinfo
 popd
 
+%if %{with python2}
 # Build Python 2 modules
 pushd %{py2dir}
 find -name '*.py' | xargs sed -i '1s|^#!.*python|#!%{__python2}|'
@@ -82,7 +88,7 @@ pushd doc
 make html SPHINXBUILD=sphinx-build-%py2_ver
 rm -f _build/html/.buildinfo
 popd
-
+%endif
 
 %install
 # Install Python 3 modules
@@ -91,6 +97,7 @@ popd
 # Fix non-standard-executable-perm
 chmod 0755 %{buildroot}%{python_sitearch}/*.so
 
+%if %{with python2}
 # Install Python 2 modules
 pushd %{py2dir}
 %{__python2} setup.py install --skip-build --root %{buildroot}
@@ -98,6 +105,7 @@ popd
 
 # Fix non-standard-executable-perm
 chmod 0755 %{buildroot}%{python3_sitearch}/*.so
+%endif
 
 %if 0%{?with_docs}
 pushd doc
@@ -111,7 +119,8 @@ popd
 %doc CHANGES.rst sanedoc.txt example.py doc/_build/html COPYING
 %{python3_sitearch}/*
 
+%if %{with python2}
 %files -n %{name2}
 %doc CHANGES.rst sanedoc.txt example.py doc/_build/html COPYING
 %{python2_sitearch}/*
-
+%endif
