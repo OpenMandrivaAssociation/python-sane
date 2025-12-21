@@ -25,6 +25,7 @@ URL:            https://github.com/python-pillow/Sane
 #  wget --content-disposition https://github.com/python-pillow/Sane/tarball/$commit
 Source0:        https://github.com/python-pillow/Sane/tarball/%{commit}/python-pillow-Sane-v%{version}-%{ahead}-g%{shortcommit}.tar.gz
 
+BuildRequires:	make
 BuildRequires:  sane-devel
 
 %if %{with python2}
