@@ -15,7 +15,7 @@
 
 Name:           python-sane
 Version:	2.8.3
-Release:        6
+Release:        7
 Summary:        Python SANE interface
 
 License:        MIT
