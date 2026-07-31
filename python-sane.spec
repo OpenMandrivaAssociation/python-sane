@@ -14,8 +14,8 @@
 %bcond_with python2
 
 Name:           python-sane
-Version:	2.8.3
-Release:        7
+Version:	2.9.2
+Release:        1
 Summary:        Python SANE interface
 
 License:        MIT
@@ -61,7 +61,7 @@ various raster scanning devices such as flatbed scanners and digital cameras.
 
 
 %prep
-%setup -q -n python-pillow-Sane-%{shortcommit}
+%setup -q -n python-pillow-Sane-8c4d40d
 
 # Create Python 3 source tree
 rm -rf %{py2dir}
